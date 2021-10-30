@@ -1,0 +1,105 @@
+<Manager>:
+	Menu:
+		name:'menu'
+	Game:
+		id:game
+		name:'game'
+		
+	GameOver:
+		name:'gameOver'
+<Player>:
+	source:'assets/image/player/player.png'
+	size_hint:None, None
+<Bullet>:
+	canvas:
+		Color:
+			rgba:0, 0, 0, 1
+		Rectangle:
+			size:self.size
+			pos:self.pos
+	size_hint: None, None
+	
+<Comet>:
+	canvas:
+		Color:
+			rgba: 0, 0, 0, 1
+		Ellipse:
+			size: 40, 40
+			pos: self.pos
+	size_hint:None, None
+<Game>:
+	FloatLayout:
+		canvas:
+			Color:
+				rgba: 1, 1, 1, .6
+				
+			Rectangle:
+				size:root.size
+				pos:root.pos
+		size_hint:None, None
+		Button:
+			text:'down'
+			size_hint:None, None
+			width: root.width/6
+			height: root.height/2
+			x:0
+			y:0
+			on_press: root.down=True
+			on_release: root.down=False
+		Button:
+			text:'up'
+			size_hint:None, None
+			width: root.width/6
+			height: root.height/2
+			x:0
+			y: root.height/2
+			on_press: root.up=True
+			on_release: root.up=False
+		Button:
+			
+			text:'shoot'
+			id: shoot
+			size_hint:None, None
+			width: root.width/6
+			height: root.height/3
+			x: root.width-root.ids.shoot.width
+			y: 0
+			on_press: root.isShoot=True
+			on_release: root.isShoot=False
+			
+			Player:
+				size: 50, 50
+				id:player
+				x:root.ids.shoot.width+.1*root.ids.shoot.width
+				y:root.height/2-root.ids.player.height/2
+				
+			Label:
+				id: lb
+				size_hint:None, None
+				pos: .7*root.width, .7*root.height
+				text: 'fps: '
+				
+<GameOver>:
+	canvas:
+		Color:
+			rgba: 1, 0, 0, .7
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			
+	BoxLayout:
+		orientation:'vertical'
+		Label:
+			text:'Game Over'
+			font_size:'20sp'
+		Button:
+			text: 'try again'
+			on_release: app.root.current='game'
+		Button:
+			text: 'exit'
+			on_release: app.stop()
+<Menu>:
+	BoxLayout:
+		Button:
+			text:'start'
+			on_press: app.root.current='game'
